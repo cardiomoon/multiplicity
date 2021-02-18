@@ -1,0 +1,14 @@
+name: multiplicity
+title: multiplicity
+username:
+account: cardiomoon
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 892438
+bundleId: 4240859
+url: https://cardiomoon.shinyapps.io/multiplicity/
+when: 1613655398.30019
+asMultiple: FALSE
+asStatic: FALSE
+additionalFiles: Dice.jpg
+ignoredFiles: www/Dice.jpg
