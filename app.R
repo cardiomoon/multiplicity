@@ -8,14 +8,23 @@ require(plotly)
 
 shinyApp(
     ui=fluidPage(
-        h1("다중검정의 문제"),
-        p("Primary outcome이 여러 개인 경우 다중검정의 문제가 생깁니다. 
-             평균과 표준편차가 알려진 하나의 모집단에서 한 쌍의 표본을 추출하여 t.test를 시행할 경우
+        
+        h2("모집단선택"),
+        radioButtons("choice",NULL,
+                     choices=c("하나의 모집단"=1,"두개의 모집단"=2),inline=TRUE,selected=1),
+        conditionalPanel(condition="input.choice==1",
+                         h3("다중검정의 문제, 제1종오류와 유의수준"),
+                         p("평균과 표준편차가 알려진 하나의 모집단에서 한 쌍의 표본을 추출하여 t.test를 시행할 경우
              0.05 이하의 p 값을 보일 수 있는 가능성은 5%이지만 여러 번 반복하는 경우 p값의 분포는
              random하게 나타납니다. 표본추출 횟수를 바꾸어 표본추출을 해보세요. 
-             표본추출 버튼을 누를 때마다 표본을 다시 추출합니다."),
-        radioButtons("choice","모집단 선택",
-                     choices=c("하나의 모집단"=1,"두개의 모집단"=2),inline=TRUE,selected=1),
+             표본추출 버튼을 누를 때마다 표본을 다시 추출합니다. Primary outcome이 여러 개인 경우 다중검정의 문제가 생깁니다. ")
+                         ),
+        conditionalPanel(condition="input.choice==2",
+                         h3("제2종오류와 검정력"),
+                         p("평균이 다른 두개의 모집단에서 각각 표본을 추출하여 t.test를 시행할 경우
+             0.05 이하의 p 값을 보일 수 있는 가능성은 평균의 차이, 표준편차, 표본의 수에 따라 달라집니다. 
+             표본추출 버튼을 누를 때마다 표본을 다시 추출합니다.")
+        ),
         
         hr(),
         fluidRow(
@@ -47,13 +56,13 @@ shinyApp(
                     표본추출번호와 p값을 볼 수 있습니다.
                     p값그래프2는 p값 순서대로 재배열한 그래프입니다.
                     임의의 한 점을 클릭하여 선택하면 해당하는 표본 자료를 볼  수 있습니다."),
-                     ggiraphOutput("plot1",width="60%")),
+                     ggiraphOutput("plot1",height="600px")),
             tabPanel("p값 그래프2",
                      conditionalPanel(condition="input.choice=='2'",
                                       checkboxInput("power","검정력표시",value=TRUE),
                                       checkboxInput("beta","2종에러표시",value=FALSE)
                      ),
-                     ggiraphOutput("plot2",width="60%")),
+                     ggiraphOutput("plot2",height="600px")),
             tabPanel("표본자료보기",
                      fluidRow(
                          column(4,
@@ -66,9 +75,7 @@ shinyApp(
                                 plotOutput("plot3"),
                                 verbatimTextOutput("stats")))),
             
-            tabPanel("표본크기와 검정력",
-                     plotlyOutput("plot4",width="60%",height="600px")        
-            ),
+            
             tabPanel("Primary Outcome의 갯수",
                      h3("Primary outcome의 갯수와 우연히 의미있게 나올 확률"),
                      
@@ -76,6 +83,9 @@ shinyApp(
                      imageOutput("image",height="200px"),
                      plotlyOutput("plot5",width="60%",height="600px")  
                      
+            ),
+            tabPanel("표본크기와 검정력",
+                     plotlyOutput("plot4",width="60%",height="600px")        
             )
             
         )

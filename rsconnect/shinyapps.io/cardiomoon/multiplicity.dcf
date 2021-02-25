@@ -1,0 +1,13 @@
+name: multiplicity
+title:
+username:
+account: cardiomoon
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 892438
+bundleId: 4270932
+url: https://cardiomoon.shinyapps.io/multiplicity/
+when: 1614259767.59755
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: multiplicity.Rmd
